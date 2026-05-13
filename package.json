@@ -3,7 +3,7 @@
   "displayName": "Maven Run Configurations",
   "description": "IntelliJ-style Maven run configurations in the bottom panel for Cursor/VS Code.",
   "version": "0.1.0",
-  "publisher": "cursor-maven",
+  "publisher": "siegfriedbolz",
   "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.85.0",
