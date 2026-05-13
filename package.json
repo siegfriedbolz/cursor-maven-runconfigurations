@@ -94,7 +94,7 @@
   "homepage": "https://github.com/siegfriedbolz/cursor-maven-runconfigurations#readme",
   "devDependencies": {
     "@eslint/js": "^9.39.2",
-    "@types/node": "^20.11.0",
+    "@types/node": "^25.7.0",
     "@types/vscode": "^1.85.0",
     "esbuild": "^0.27.3",
     "eslint": "^9.39.2",
