@@ -1,0 +1,17 @@
+target/
+build/
+**/node_modules/
+**/.npm-cache/
+out/
+dist/
+*.jar
+*.vsix
+node_modules
+out
+dist
+*.vsix
+.DS_Store
+.vscode/
+.classpath
+.project
+.settings/

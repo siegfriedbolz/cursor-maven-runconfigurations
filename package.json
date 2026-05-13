@@ -1,0 +1,105 @@
+{
+  "name": "maven-run-configurations",
+  "displayName": "Maven Run Configurations",
+  "description": "IntelliJ-style Maven run configurations in the bottom panel for Cursor/VS Code.",
+  "version": "0.1.0",
+  "publisher": "cursor-maven",
+  "icon": "images/icon.png",
+  "engines": {
+    "vscode": "^1.85.0",
+    "node": ">=18.0.0"
+  },
+  "categories": ["Other"],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "panel": [
+        {
+          "id": "mavenRunConfigs",
+          "title": "Run Configs",
+          "icon": "resources/run-configs.svg"
+        }
+      ]
+    },
+    "views": {
+      "mavenRunConfigs": [
+        {
+          "type": "webview",
+          "id": "mavenRunConfigs.main",
+          "name": "Run Configurations",
+          "icon": "images/icon.png"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Maven Run Configurations",
+      "properties": {
+        "mavenRunConfigs.defaultJavaHome": {
+          "type": "string",
+          "default": "",
+          "description": "Path to JDK/JRE (JAVA_HOME) when a run configuration has no Java override. macOS: .jdk bundle ok. Linux/Windows: folder that contains bin/java (or bin\\java.exe).",
+          "markdownDescription": "Path to JDK/JRE (**JAVA_HOME**) when a run configuration has no Java override.\n\n**macOS:** Prefer the JDK **bundle folder** (e.g. `…/jdk-11.jdk` under `/Library/Java/JavaVirtualMachines/`). The extension resolves `Contents/Home` when needed.\n\n**Linux:** The directory that contains **`bin/java`** (often under `/usr/lib/jvm/`, e.g. `java-17-openjdk-amd64`; exact names vary by distro/package).\n\n**Windows:** The JDK **root** that contains **`bin\\java.exe`** (e.g. `C:\\Program Files\\Java\\jdk-17` or `C:\\Program Files\\Eclipse Adoptium\\jdk-17.x-hotspot`). Do not point only at `bin`.\n\n[Open dialog: text + Browse…](command:mavenRunConfigs.openGlobalDefaultsPanel) (same layout as run configuration overrides).\n\n[Browse only](command:mavenRunConfigs.pickDefaultJavaHome)"
+        },
+        "mavenRunConfigs.defaultMavenHome": {
+          "type": "string",
+          "default": "",
+          "description": "Maven install root (MAVEN_HOME): folder with bin/mvn (or bin/mvn.cmd). No auto-detection like macOS JDK—use the unpacked archive root (e.g. …/apache-maven-3.8.8).",
+          "markdownDescription": "Apache Maven **install root** (`MAVEN_HOME` / `M2_HOME`): the directory that contains **`bin/mvn`** (macOS/Linux) or **`bin/mvn.cmd`** (Windows).\n\n**How the extension uses it:** the path is **`path.resolve`’d** as you typed it, then it checks that **`bin/mvn`** (or **`mvn.cmd`**) exists. There is **no** parent/subfolder guessing and **no** macOS-style rewrite (unlike `defaultJavaHome` + `.jdk` / `Contents/Home`).\n\n**Typical layout:** unpacked binary archive—the folder that lists **`bin`**, **`conf`**, **`lib`** (e.g. `…/Tools/apache-maven-3.8.8` or `…/apache-maven-3.9.6`). **Do not** set this to `bin` alone.\n\n**Examples:** `…/Development/Tools/apache-maven-3.8.8`; Linux e.g. `/opt/apache-maven-3.9.6` or distro layout under `/usr/share/maven` **only if** `bin/mvn` lives there; Windows e.g. `C:\\Tools\\apache-maven-3.9.6`.\n\n[Open dialog: text + Browse…](command:mavenRunConfigs.openGlobalDefaultsPanel) (same layout as run configuration overrides).\n\n[Browse only](command:mavenRunConfigs.pickDefaultMavenHome)"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "mavenRunConfigs.openExtensionSettings",
+        "title": "Maven Run Configs: Open Settings"
+      },
+      {
+        "command": "mavenRunConfigs.openGlobalDefaultsPanel",
+        "title": "Edit default Java / Maven paths…",
+        "category": "Maven Run Configs"
+      },
+      {
+        "command": "mavenRunConfigs.pickDefaultJavaHome",
+        "title": "Browse for default Java home (JAVA_HOME)",
+        "category": "Maven Run Configs"
+      },
+      {
+        "command": "mavenRunConfigs.pickDefaultMavenHome",
+        "title": "Browse for default Maven home",
+        "category": "Maven Run Configs"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "npm run check-types && node esbuild.js",
+    "check-types": "npx tsc --noEmit",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "npx tsc --noEmit --watch --project tsconfig.json",
+    "vscode:prepublish": "npm run package",
+    "package": "npm run check-types && node esbuild.js --production",
+    "vsix": "npm run package && npx --yes @vscode/vsce package --no-dependencies",
+    "lint": "eslint \"src/**/*.ts\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT",
+  "author": "Siegfried-Thor Bolz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siegfriedbolz/cursor-maven-runconfigurations.git"
+  },
+  "bugs": {
+    "url": "https://github.com/siegfriedbolz/cursor-maven-runconfigurations/issues"
+  },
+  "homepage": "https://github.com/siegfriedbolz/cursor-maven-runconfigurations#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.27.3",
+    "eslint": "^9.39.2",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1"
+  }
+}
