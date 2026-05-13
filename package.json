@@ -9,7 +9,9 @@
     "vscode": "^1.85.0",
     "node": ">=18.0.0"
   },
-  "categories": ["Other"],
+  "categories": [
+    "Other"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "viewsContainers": {
